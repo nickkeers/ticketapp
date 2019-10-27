@@ -1,0 +1,18 @@
+<h1>Show Ticket</h1>
+
+<ul>
+
+  <li>
+    <strong>Customer name:</strong>
+    <%= @ticket.customer_name %>
+  </li>
+
+  <li>
+    <strong>Payment ref:</strong>
+    <%= @ticket.payment_ref %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.ticket_path(@conn, :edit, @ticket) %></span>
+<span><%= link "Back", to: Routes.ticket_path(@conn, :index) %></span>
