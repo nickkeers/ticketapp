@@ -27,5 +27,5 @@ jobs:
       - name: Run tests
         run: mix test
         env:
-          DB_HOST: postgres
+          DB_HOST: localhost
           MIX_ENV: test
