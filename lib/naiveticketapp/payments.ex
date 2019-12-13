@@ -22,6 +22,22 @@ defmodule Naiveticketapp.Payments do
   end
 
   @doc """
+  Return a list of tickets which are confirmed (purchased)
+  """
+  def get_confirmed_tickets do
+    from(t in Ticket, where: t.confirmed == true)
+    |> Repo.all()
+  end
+
+  @doc """
+  Return the number of tickets claimed (number of rows in the ticket table)
+  """
+  @spec get_num_claimed() :: integer()
+  def get_num_claimed do
+    length(list_tickets())
+  end
+
+  @doc """
   Gets a single ticket.
 
   Raises `Ecto.NoResultsError` if the Ticket does not exist.
