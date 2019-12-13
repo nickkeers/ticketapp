@@ -14,5 +14,4 @@
 
 </ul>
 
-<span><%= link "Edit", to: Routes.ticket_path(@conn, :edit, @ticket) %></span>
 <span><%= link "Back", to: Routes.ticket_path(@conn, :index) %></span>

@@ -3,11 +3,7 @@ defmodule NaiveticketappWeb.TicketControllerTest do
 
   alias Naiveticketapp.Payments
 
-  @create_attrs %{customer_name: "some customer_name", payment_ref: "some payment_ref"}
-  @update_attrs %{
-    customer_name: "some updated customer_name",
-    payment_ref: "some updated payment_ref"
-  }
+  @create_attrs %{customer_name: "some customer_name", payment_ref: "some payment_ref", confirmed: false}
   @invalid_attrs %{customer_name: nil, payment_ref: nil}
 
   def fixture(:ticket) do
@@ -16,16 +12,16 @@ defmodule NaiveticketappWeb.TicketControllerTest do
   end
 
   describe "index" do
-    test "lists all tickets", %{conn: conn} do
+    test "index redirects to new ticket page", %{conn: conn} do
       conn = get(conn, Routes.ticket_path(conn, :index))
-      assert html_response(conn, 200) =~ "Listing Tickets"
+      assert redirected_to(conn, 302) =~ "/new"
     end
   end
 
   describe "new ticket" do
     test "renders form", %{conn: conn} do
       conn = get(conn, Routes.ticket_path(conn, :new))
-      assert html_response(conn, 200) =~ "New Ticket"
+      assert html_response(conn, 200) =~ "Buy your ticket"
     end
   end
 
@@ -42,51 +38,7 @@ defmodule NaiveticketappWeb.TicketControllerTest do
 
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post(conn, Routes.ticket_path(conn, :create), ticket: @invalid_attrs)
-      assert html_response(conn, 200) =~ "New Ticket"
+      assert html_response(conn, 200) =~ "Buy your ticket"
     end
-  end
-
-  describe "edit ticket" do
-    setup [:create_ticket]
-
-    test "renders form for editing chosen ticket", %{conn: conn, ticket: ticket} do
-      conn = get(conn, Routes.ticket_path(conn, :edit, ticket))
-      assert html_response(conn, 200) =~ "Edit Ticket"
-    end
-  end
-
-  describe "update ticket" do
-    setup [:create_ticket]
-
-    test "redirects when data is valid", %{conn: conn, ticket: ticket} do
-      conn = put(conn, Routes.ticket_path(conn, :update, ticket), ticket: @update_attrs)
-      assert redirected_to(conn) == Routes.ticket_path(conn, :show, ticket)
-
-      conn = get(conn, Routes.ticket_path(conn, :show, ticket))
-      assert html_response(conn, 200) =~ "some updated customer_name"
-    end
-
-    test "renders errors when data is invalid", %{conn: conn, ticket: ticket} do
-      conn = put(conn, Routes.ticket_path(conn, :update, ticket), ticket: @invalid_attrs)
-      assert html_response(conn, 200) =~ "Edit Ticket"
-    end
-  end
-
-  describe "delete ticket" do
-    setup [:create_ticket]
-
-    test "deletes chosen ticket", %{conn: conn, ticket: ticket} do
-      conn = delete(conn, Routes.ticket_path(conn, :delete, ticket))
-      assert redirected_to(conn) == Routes.ticket_path(conn, :index)
-
-      assert_error_sent 404, fn ->
-        get(conn, Routes.ticket_path(conn, :show, ticket))
-      end
-    end
-  end
-
-  defp create_ticket(_) do
-    ticket = fixture(:ticket)
-    {:ok, ticket: ticket}
   end
 end

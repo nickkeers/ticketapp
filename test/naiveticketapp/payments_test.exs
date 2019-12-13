@@ -6,12 +6,13 @@ defmodule Naiveticketapp.PaymentsTest do
   describe "tickets" do
     alias Naiveticketapp.Payments.Ticket
 
-    @valid_attrs %{customer_name: "some customer_name", payment_ref: "some payment_ref"}
+    @valid_attrs %{customer_name: "some customer_name", payment_ref: "some payment_ref", confirmed: false}
     @update_attrs %{
       customer_name: "some updated customer_name",
-      payment_ref: "some updated payment_ref"
+      payment_ref: "some updated payment_ref",
+      confirmed: true
     }
-    @invalid_attrs %{customer_name: nil, payment_ref: nil}
+    @invalid_attrs %{customer_name: nil, payment_ref: nil, confirmed: nil}
 
     def ticket_fixture(attrs \\ %{}) do
       {:ok, ticket} =
