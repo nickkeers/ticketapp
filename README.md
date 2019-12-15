@@ -1,5 +1,15 @@
 # DICE tech test - Nick Keers
 
+## Current status
+
+To run this locally you need to:
+
+1. Run the migrations using `mix ecto.migrate`
+2. Setup webhooks in the stripe dashboard for `checkout.session.completed`
+3. Change stripe API keys in `config/config.exs` and `config/dev.exs`
+4. Using the stripe-cli, run: `stripe  listen --forward-to localhost:4000/hooks`
+5. Run the project using `mix phx.server`
+
 ## Technology used
 
 * [Phoenix Framework](https://phoenixframework.org/) - I've standardised on the Phoenix Framework at my current workplace as it makes building
@@ -44,4 +54,3 @@ There are a few approaches that could work here:
     * Cons: Opaque - logic lives in the database, i've seen this problem at my past employer and at my current employer, it quickly becomes a nightmare to deal with.
 2. Check the row count when inserting / updating from the application. With the approach described above when editing the confirmed field this won't work anymore. If i was just limiting the number of rows then it would have been easier, off the top of my head I can't think of an easy way to only update a field if there are < 5 other records.
 3. Keep state in the application, since this is a small problem then I could just create a GenServer or similar that holds the available number of tickets and when a new purchase comes through reserve one. The ticket would have to be held for a fixed amount of time as a user could put a request in for a ticket and then close their browser - the request could still come through to the GenServer to reserve the ticket, and then it'd be stuck. It'd be trivial just to set a time period to hold the ticket for e.g 10s and have a timer repeatedly run and reset the state of tickets back if the purchase hasn't completed yet. For this task, this approach might be the easiest, the biggest pro here is that it reduces load on the database by a large margin, and keeps business logic in the application. For this task, one GenServer would be enough to hold tickets, but in a production application where you need to be able to handle more traffic a different approach would be needed to avoid the single-process bottleneck; you would need to hold state across a cluster e.g by using something like Swarm + LibCluster to spawn "ticket servers" - you could start 5 workers and they could be spread throughout your cluster. Or you could use something like Raft and distribute process using a master node.
-
