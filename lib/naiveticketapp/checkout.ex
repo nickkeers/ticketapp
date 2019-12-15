@@ -21,15 +21,12 @@ defmodule Naiveticketapp.Checkout do
             description: "A pre-release ticket for our latest event"
           }
         ],
-        payment_intent_data: %{
-          capture_method: :manual
-        },
         success_url: Naiveticketapp.get_public_url("/success?session_id={CHECKOUT_SESSION_ID}"),
         cancel_url: Naiveticketapp.get_public_url("/new")
       })
 
     case result do
-      {:ok, %Stripe.Session{id: session_id, payment_intent: %Stripe.PaymentIntent{id: intent_id}}} ->
+      {:ok, %Stripe.Session{id: session_id, payment_intent: intent_id}} ->
         {:ok, session_id, intent_id}
 
       {:error, %Stripe.Error{}} = err ->

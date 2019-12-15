@@ -21,6 +21,11 @@ defmodule Naiveticketapp.Tickets do
     Repo.all(Ticket)
   end
 
+  def get_reservations do
+    from(t in Ticket, where: t.reserved == true)
+    |> Repo.all()
+  end
+
   def set_payment_intent_for_customer(name, intent_id) do
     from(t in Ticket, where: t.name == ^name)
     |> Repo.one()
@@ -41,7 +46,7 @@ defmodule Naiveticketapp.Tickets do
   """
   @spec get_num_claimed() :: integer()
   def get_num_claimed do
-    length(list_tickets())
+    length(get_confirmed_tickets())
   end
 
   @doc """

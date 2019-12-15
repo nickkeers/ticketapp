@@ -18,5 +18,13 @@ defmodule NaiveticketappWeb.Router do
 
     resources "/", TicketController, only: [:new, :create, :index, :show]
     resources "/payments", PaymentsController, only: [:new, :create, :show]
+
+    get "/success", WebhooksController, :success
+  end
+
+  scope "/hooks", NaiveticketappWeb do
+    pipe_through :api
+
+    post "/", WebhooksController, :hooks
   end
 end
