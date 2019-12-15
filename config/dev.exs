@@ -21,6 +21,12 @@ config :naiveticketapp, NaiveticketappWeb.Endpoint,
     ]
   ]
 
+config :stripity_stripe, hackney_opts: [{:connect_timeout, 1000}, {:recv_timeout, 5000}]
+config :stripity_stripe, api_key: "sk_test_IZpem4XH1KsuDWpoBFGsx9Js00yxSeAnKR"
+
+config :naiveticketapp,
+  base_url: System.get_env("BASE_URL") || "https://example.com/"
+
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed

@@ -1,0 +1,10 @@
+<h1>Show Payments</h1>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @payments.name %>
+  </li>
+
+</ul>

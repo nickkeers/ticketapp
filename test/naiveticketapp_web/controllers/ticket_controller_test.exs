@@ -1,13 +1,17 @@
 defmodule NaiveticketappWeb.TicketControllerTest do
   use NaiveticketappWeb.ConnCase
 
-  alias Naiveticketapp.Payments
+  alias Naiveticketapp.Tickets
 
-  @create_attrs %{customer_name: "some customer_name", payment_ref: "some payment_ref", confirmed: false}
+  @create_attrs %{
+    customer_name: "some customer_name",
+    payment_ref: "some payment_ref",
+    confirmed: false
+  }
   @invalid_attrs %{customer_name: nil, payment_ref: nil}
 
   def fixture(:ticket) do
-    {:ok, ticket} = Payments.create_ticket(@create_attrs)
+    {:ok, ticket} = Tickets.create_ticket(@create_attrs)
     ticket
   end
 

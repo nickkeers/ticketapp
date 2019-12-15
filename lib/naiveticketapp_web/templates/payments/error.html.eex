@@ -1,0 +1,5 @@
+<h1>Uh oh!</h1>
+
+<p>We encountered an error whilst setting up your purchase with Stripe: <%= @error_msg %></p>
+
+<p><%= link "Try again?", to: Routes.payments_path(@conn, :new) %></p>

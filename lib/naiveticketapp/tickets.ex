@@ -1,4 +1,4 @@
-defmodule Naiveticketapp.Payments do
+defmodule Naiveticketapp.Tickets do
   @moduledoc """
   The Payments context.
   """
@@ -6,7 +6,7 @@ defmodule Naiveticketapp.Payments do
   import Ecto.Query, warn: false
   alias Naiveticketapp.Repo
 
-  alias Naiveticketapp.Payments.Ticket
+  alias Naiveticketapp.Tickets.Ticket
 
   @doc """
   Returns the list of tickets.
@@ -19,6 +19,13 @@ defmodule Naiveticketapp.Payments do
   """
   def list_tickets do
     Repo.all(Ticket)
+  end
+
+  def set_payment_intent_for_customer(name, intent_id) do
+    from(t in Ticket, where: t.name == ^name)
+    |> Repo.one()
+    |> Ticket.changeset(%{intent_id: intent_id})
+    |> Repo.update()
   end
 
   @doc """

@@ -4,7 +4,7 @@ defmodule Naiveticketapp.Repo.Migrations.CreateTickets do
   def change do
     create table(:tickets) do
       add :customer_name, :string
-      add :payment_ref, :string
+      add :payment_ref, :string, default: nil
       add :confirmed, :boolean, default: false
 
       timestamps()

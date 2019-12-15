@@ -17,5 +17,6 @@ defmodule NaiveticketappWeb.Router do
     pipe_through :browser
 
     resources "/", TicketController, only: [:new, :create, :index, :show]
+    resources "/payments", PaymentsController, only: [:new, :create, :show]
   end
 end

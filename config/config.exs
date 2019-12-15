@@ -17,6 +17,9 @@ config :naiveticketapp, NaiveticketappWeb.Endpoint,
   render_errors: [view: NaiveticketappWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Naiveticketapp.PubSub, adapter: Phoenix.PubSub.PG2]
 
+config :naiveticketapp,
+  stripe_publishable_key: "pk_test_9tcooplWeOsEckpEt2xNQSSo005cRWiWTn"
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

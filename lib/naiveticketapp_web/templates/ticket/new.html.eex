@@ -1,26 +1,43 @@
 <div class="h-full flex justify-center items-center">
+
     <%= form_for @changeset, Routes.ticket_path(@conn, :create), [class: "max-w-lg bg-white px-8 py-5 rounded border border-solid border-gray-300"], fn f -> %>
     <div>
       <div class="mb-6">
-        <h1 class="text-4xl font-bold">Buy your ticket</h1>
-        <span class="uppercase text-sm text-gray-600">Only <strong>5</strong> tickets left!</span>
+        <h1 class="text-4xl font-bold">Reserve your ticket</h1>
+        <%= if @ticket_count != 0 do %>
+        <span class="uppercase text-sm text-gray-600">Only <strong><%= @ticket_count %></strong> ticket(s) left!</span>
+        <% else %>
+        <span class="uppercase text-sm text-gray-600">Sold out!</span>
+        <% end %>
       </div>
       <div class="mb-10">
+        <%= if @ticket_count != 0 do %>
         <p>
-          Buy your ticket for the next Foo Fighters concert! This is an exclusive ticket pre-release
-          - these tickets are £5 each; but when they're gone, they're gone!
+          Reserve your ticket for the next Foo Fighters concert! This is an exclusive ticket pre-release
+          - these tickets are £5 each; but when they're gone, they're gone! Once you've reserved your ticket,
+          you will be redirected to the checkout page
         </p>
+        <% else %>
+        <p>
+          Sorry! All of pre-release tickets are now sold out, please wait for another accouncement for the next batch!
+        </p>
+        <% end %>
       </div>
 
       <div class="mb-5">
-        <%= label f, :customer_name, class: "block text-gray-700 text-sm font-bold mb-2" do %>
-            Full Name
+        <%= if @ticket_count > 0 do %>
+          <%= label f, :customer_name, class: "block text-gray-700 text-sm font-bold mb-2" do %>
+              Full Name
+          <% end %>
+
+          <%= text_input f, :customer_name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", placeholder: "John Smith" %>
+          <%= error_tag f, :customer_name %>
+          </div>
+          <%= submit "Reserve Ticket", class: "w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+        <% else %>
+
+        </div>
         <% end %>
-
-        <%= text_input f, :customer_name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", placeholder: "John Smith" %>
-      </div>
-
-        <%= submit "Buy Ticket (£5)", class: "w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
     </div>
     <% end %>
 </div>
